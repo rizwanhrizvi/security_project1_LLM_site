@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Minimal Site</title>
-
+  <title>Security Test Site</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -18,14 +17,21 @@
     }
   </style>
 </head>
+  
 <body>
-
-  <!-- Display your number -->
   <div id="number">123</div>
-<script>
-  fetch("https://script.google.com/macros/s/AKfycbxDcGXZuvmOv3lnICN3c3hIP8d-aPx-G_tn6dvXPZ-Y60SLsRAgl24b12uvx63HlwH_/exec?page=" + encodeURIComponent(location.href) + "&ua=" + encodeURIComponent(navigator.userAgent));
+  
+  <script>
+  fetch("https://api.ipify.org?format=json")
+    .then(res => res.json())
+    .then(data => {
+      var ip = data.ip;
+      return fetch("https://script.google.com/macros/s/AKfycbx3Q5Yi5NghybFhyXyHTmmKNyZqhGgyoJcV0anYFPdsh9N1jRSEDgRIwsWrVWaQJc4/exec?page=" 
+                   + encodeURIComponent(location.href)
+                   + "&ua=" + encodeURIComponent(navigator.userAgent)
+                   + "&ip=" + encodeURIComponent(ip));
+    })
+    .catch(err => console.error("Logging failed:", err));
 </script>
-
-
 </body>
 </html>
