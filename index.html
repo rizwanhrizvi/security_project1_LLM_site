@@ -1,16 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-9XJTMLH1CC"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-9XJTMLH1CC');
-</script>
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Minimal Site</title>
@@ -32,6 +22,9 @@
 
   <!-- Display your number -->
   <div id="number">123</div>
+<script>
+  fetch("https://script.google.com/macros/s/AKfycbz9lSKDzbLJ-0SNaYi_b56jG2Hduo42oeNG9nFF81l0ypGh4RzQq_ivCepS0RgJj1Fb/exec?page=" + encodeURIComponent(location.pathname) + "&ua=" + encodeURIComponent(navigator.userAgent));
+</script>
 
 </body>
 </html>
