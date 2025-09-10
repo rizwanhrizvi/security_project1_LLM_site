@@ -1,5 +1,6 @@
 {
-  "rewrites": [
-    { "source": "/", "destination": "/api" }
+  "routes": [
+    { "src": "/", "dest": "/middleware.js" }
   ]
 }
+
