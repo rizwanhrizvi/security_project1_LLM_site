@@ -8,7 +8,7 @@ export default function handler(req, res) {
   console.log("Request received:", { method, url, headers });
 
   // Path to your HTML file
-  const filePath = path.join(process.cwd(), "public", "index.html");
+  const filePath = path.join(process.cwd(), "public", "site.html");
 
   try {
     const html = fs.readFileSync(filePath, "utf-8");
