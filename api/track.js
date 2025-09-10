@@ -11,12 +11,4 @@ export default async function handler(req, res) {
     } catch (err) {
         console.error("Failed to log to Google Sheets:", err);
     }
-
-    // Return 1x1 transparent PNG
-    const img = Buffer.from(
-        "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Xw8AAoMBgQMB9D8AAAAASUVORK5CYII=",
-        "base64"
-    );
-    res.setHeader("Content-Type", "image/png");
-    res.status(200).end(img);
 }
