@@ -5,18 +5,15 @@ export default async function handler(req, res) {
   const { method, query, url, headers } = req;
 
   // Log request
-  // console.log("Request received:", { method, query, url, headers });
-
-  console.log("Request received:", req);
-  console.log("Response sent:", res);
+  console.log("Request received:", { method, query, url, headers });
 
   const logUrl = `https://script.google.com/macros/s/AKfycbx3Q5Yi5NghybFhyXyHTmmKNyZqhGgyoJcV0anYFPdsh9N1jRSEDgRIwsWrVWaQJc4/exec?page=${encodeURIComponent(query.page || "unknown")}&ua=${encodeURIComponent(headers["user-agent"] || "unknown")}&ip=${encodeURIComponent(headers["x-forwarded-for"] || req.socket.remoteAddress || "unknown")}`;
 
   // Call Google Script via GET
   try {
-      await fetch(logUrl);
+    await fetch(logUrl);
   } catch (err) {
-      console.error("Failed to log to Google Sheets:", err);
+    console.error("Failed to log to Google Sheets:", err);
   }
 
   // Serve the HTML
@@ -24,15 +21,36 @@ export default async function handler(req, res) {
 
   if (!fs.existsSync(filePath)) {
     console.error("HTML file not found:", filePath);
+    // Log response before sending
+    console.log("Response:", {
+      statusCode: 500,
+      headers: { "Content-Type": "text/plain" },
+      bodyPreview: "HTML file missing",
+    });
     return res.status(500).send("HTML file missing");
   }
 
   try {
     const html = fs.readFileSync(filePath, "utf-8");
+
+    // Log the response before sending
+    console.log("Response:", {
+      statusCode: 200,
+      headers: { "Content-Type": "text/html" },
+      bodyPreview: html.slice(0, 200) + (html.length > 200 ? "..." : ""),
+    });
+
     res.setHeader("Content-Type", "text/html");
     res.status(200).send(html);
   } catch (err) {
     console.error("Error reading HTML:", err);
+    // Log response before sending
+    console.log("Response:", {
+      statusCode: 500,
+      headers: { "Content-Type": "text/plain" },
+      bodyPreview: "Server error",
+    });
     res.status(500).send("Server error");
   }
 }
+
