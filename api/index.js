@@ -23,7 +23,7 @@ export default async function handler(req, res) {
   };
   
   if (method !== "GET") {
-    requestLog.bodyPreview = req.body ? JSON.stringify(req.body).slice(0, 450) : null;
+    requestLog.bodyPreview = req.body ? JSON.stringify(req.body): null;
   }
   
   console.log("Request received:", requestLog);
@@ -59,7 +59,7 @@ export default async function handler(req, res) {
     console.log("Response:", {
       statusCode: 200,
       headers: { "Content-Type": "text/html" },
-      bodyPreview: html.slice(0, 200) + (html.length > 200 ? "..." : ""),
+      bodyPreview: html,
     });
 
     res.setHeader("Content-Type", "text/html");
