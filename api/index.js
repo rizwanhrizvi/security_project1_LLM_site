@@ -23,7 +23,7 @@ export default async function handler(req, res) {
   };
   
   if (method !== "GET") {
-    requestLog.bodyPreview = req.body ? JSON.stringify(req.body).slice(0, 200) : null;
+    requestLog.bodyPreview = req.body ? JSON.stringify(req.body).slice(0, 450) : null;
   }
   
   console.log("Request received:", requestLog);
