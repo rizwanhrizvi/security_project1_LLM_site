@@ -3,33 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Current Time</title>
+  <title>Security Test Site</title>
   <style>
-    #clock {
-      font-size: 2em;
-      font-family: monospace;
-      color: #333;
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+    #number {
+      font-size: 72px;
+      font-weight: bold;
+      margin-bottom: 50px;
     }
   </style>
 </head>
+  
 <body>
-  <div id="clock">Loading time...</div>
-
-  <script>
-    function updateTime() {
-      const now = new Date();
-      const hours = String(now.getHours()).padStart(2, '0');
-      const minutes = String(now.getMinutes()).padStart(2, '0');
-      const seconds = String(now.getSeconds()).padStart(2, '0');
-      document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
-    }
-
-    // Update the clock every second
-    setInterval(updateTime, 1000);
-
-    // Initialize clock immediately
-    updateTime();
-  </script>
+  <div id="number">28</div>
 </body>
 </html>
-
