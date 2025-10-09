@@ -23,27 +23,16 @@ export default async function handler(req, res) {
   };
   
   if (method !== "GET") {
-    requestLog.bodyPreview = req.body ? JSON.stringify(req.body): null;
+    requestLog.bodyPreview = req.body ? JSON.stringify(req.body) : null;
   }
   
   console.log("Request received:", requestLog);
 
-
-  // const logUrl = `https://script.google.com/macros/s/AKfycbx3Q5Yi5NghybFhyXyHTmmKNyZqhGgyoJcV0anYFPdsh9N1jRSEDgRIwsWrVWaQJc4/exec?page=${encodeURIComponent(query.page || "unknown")}&ua=${encodeURIComponent(headers["user-agent"] || "unknown")}&ip=${encodeURIComponent(headers["x-forwarded-for"] || req.socket.remoteAddress || "unknown")}`;
-
-  // // Call Google Script via GET
-  // try {
-  //   await fetch(logUrl);
-  // } catch (err) {
-  //   console.error("Failed to log to Google Sheets:", err);
-  // }
-
-  // Serve the HTML
+  // Path to HTML file
   const filePath = path.join(process.cwd(), "public", "site.html");
 
   if (!fs.existsSync(filePath)) {
     console.error("HTML file not found:", filePath);
-    // Log response before sending
     console.log("Response:", {
       statusCode: 500,
       headers: { "Content-Type": "text/plain" },
@@ -55,18 +44,27 @@ export default async function handler(req, res) {
   try {
     const html = fs.readFileSync(filePath, "utf-8");
 
+    // Set headers to **prevent caching**
+    res.setHeader("Content-Type", "text/html");
+    res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
+    res.setHeader("Pragma", "no-cache"); // HTTP/1.0 backward compatibility
+    res.setHeader("Expires", "0");       // Expire immediately
+
     // Log the response before sending
     console.log("Response:", {
       statusCode: 200,
-      headers: { "Content-Type": "text/html" },
+      headers: {
+        "Content-Type": "text/html",
+        "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+        "Pragma": "no-cache",
+        "Expires": "0",
+      },
       bodyPreview: html,
     });
 
-    res.setHeader("Content-Type", "text/html");
     res.status(200).send(html);
   } catch (err) {
     console.error("Error reading HTML:", err);
-    // Log response before sending
     console.log("Response:", {
       statusCode: 500,
       headers: { "Content-Type": "text/plain" },
@@ -75,4 +73,3 @@ export default async function handler(req, res) {
     res.status(500).send("Server error");
   }
 }
-
